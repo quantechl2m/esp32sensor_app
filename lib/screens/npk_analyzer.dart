@@ -499,21 +499,21 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <NPKData>[
+                    NPKData('Temperature', 'Temperature', _temperature, Colors.black,
+                        _idealRange['Temperature']!.getStatus(_temperature)),
+                    NPKData('Moisture', 'Moisture', _moisture, Colors.pink.shade700,
+                        _idealRange['Moisture']!.getStatus(_moisture)),
                     NPKData('Nitrogen'.tr, 'N', _nitrogen, Colors.blue,
                         _idealRange['N']!.getStatus(_nitrogen)),
                     NPKData('Phosphorus', 'P', _phosphorus, Colors.orange,
                         _idealRange['P']!.getStatus(_phosphorus)),
                     NPKData('Potassium', 'K', _potassium, Colors.purple,
                         _idealRange['K']!.getStatus(_potassium)),
-
                     NPKData('PH', 'pH', _ph, Colors.green,
                         _idealRange['pH']!.getStatus(_ph)),
                     NPKData('Conductivity', 'Conductivity', _conductivity, Colors.red,
                         _idealRange['Conductivity']!.getStatus(_conductivity)),
-                    NPKData('Temperature', 'Temperature', _temperature, Colors.black,
-                        _idealRange['Temperature']!.getStatus(_temperature)),
-                    NPKData('Moisture', 'Moisture', _moisture, Colors.pink.shade700,
-                        _idealRange['Moisture']!.getStatus(_moisture)),
+
                   ]
                       .map((e) => Column(
                             children: [
