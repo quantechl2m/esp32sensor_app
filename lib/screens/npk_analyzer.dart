@@ -8,7 +8,8 @@ import 'package:esp32sensor/utils/pojo/npk.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
+// import 'package:syncfusion_flutter_gauges/gauges.dart';
+
 class NPKAnalyzer extends StatefulWidget {
   final String value;
   final bool isCrop;
@@ -68,7 +69,8 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
       }
 
       for (var crop in crops) {
-        if (crop.npkIdealRange.isInRange(_nitrogen, _phosphorus, _potassium,_ph,_conductivity,_temperature,_moisture)) {
+        if (crop.npkIdealRange.isInRange(_nitrogen, _phosphorus, _potassium,
+            _ph, _conductivity, _temperature, _moisture)) {
           setState(() {
             _crops.add(crop);
           });
@@ -112,14 +114,14 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
               int.parse(pRange.split('-')[0]), int.parse(pRange.split('-')[1])),
           'K': Range(
               int.parse(kRange.split('-')[0]), int.parse(kRange.split('-')[1])),
-          'pH': Range(
-              int.parse(phRange.split('-')[0]), int.parse(phRange.split('-')[1])),
-          'Conductivity': Range(
-              int.parse(conductivityRange.split('-')[0]), int.parse(conductivityRange.split('-')[1])),
-          'Temperature': Range(
-              int.parse(temperatureRange.split('-')[0]), int.parse(temperatureRange.split('-')[1])),
-          'Moisture': Range(
-              int.parse(moistureRange.split('-')[0]), int.parse(moistureRange.split('-')[1])),
+          'pH': Range(int.parse(phRange.split('-')[0]),
+              int.parse(phRange.split('-')[1])),
+          'Conductivity': Range(int.parse(conductivityRange.split('-')[0]),
+              int.parse(conductivityRange.split('-')[1])),
+          'Temperature': Range(int.parse(temperatureRange.split('-')[0]),
+              int.parse(temperatureRange.split('-')[1])),
+          'Moisture': Range(int.parse(moistureRange.split('-')[0]),
+              int.parse(moistureRange.split('-')[1])),
         };
         _isLoading = false;
       });
@@ -176,15 +178,16 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
       'N': 0,
       'P': 0,
       'K': 0,
-      'pH':0,
-      'Conductivity':0,
-      'Temperature':0,
-      'Moisture':0,
+      'pH': 0,
+      'Conductivity': 0,
+      'Temperature': 0,
+      'Moisture': 0,
       'timestamp': Timestamp.now(),
       'sensorId': 123456
     });
     super.dispose();
   }
+
   void openBottomSheet() {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
@@ -215,153 +218,157 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                   children: [
                     _data.isEmpty
                         ? Center(
-                      heightFactor: 10,
-                      child: Text('no_data'.tr),
-                    )
+                            heightFactor: 10,
+                            child: Text('no_data'.tr),
+                          )
                         : Column(
-                      children: _data
-                          .map((doc) => Column(
-                        children: [
-                          ListTile(
-                            leading: const Icon(Icons.sensors),
-                            title:
-                            Text(doc['sensorId'].toString()),
-                            subtitle: Text(dateFormatter(
-                                doc['timestamp']!.toDate())),
-                            // contentPadding:
-                            // const EdgeInsets.symmetric(
-                            //     horizontal: 20.0,
-                            //     vertical: 5.0),
-                            // horizontalTitleGap: 0,
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'N',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['N'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'P',
-                                      style: TextStyle(
-                                          color: Colors.orange,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['P'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'K',
-                                      style: TextStyle(
-                                          color: Colors.purple,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['K'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'pH',
-                                      style: TextStyle(
-                                          color: Colors.purple,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['pH'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Cond.',
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['Conductivity'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Temp.',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['Temperature'].toString()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                     Text(
-                                      'Moist.',
-                                      style: TextStyle(
-                                          color: Colors.pink.shade700,
-                                          fontWeight:
-                                          FontWeight.bold),
-                                    ),
-                                    Text(doc['Moisture'].toString()),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Divider(
-                            height: 5.0,
-                          ),
-                        ],
-                      ))
-                          .toList(),
-                    )
+                            children: _data
+                                .map((doc) => Column(
+                                      children: [
+                                        ListTile(
+                                          leading: const Icon(Icons.sensors),
+                                          title:
+                                              Text(doc['sensorId'].toString()),
+                                          subtitle: Text(dateFormatter(
+                                              doc['timestamp']!.toDate())),
+                                          // contentPadding:
+                                          // const EdgeInsets.symmetric(
+                                          //     horizontal: 20.0,
+                                          //     vertical: 5.0),
+                                          // horizontalTitleGap: 0,
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'N',
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['N'].toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'P',
+                                                    style: TextStyle(
+                                                        color: Colors.orange,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['P'].toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'K',
+                                                    style: TextStyle(
+                                                        color: Colors.purple,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['K'].toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'pH',
+                                                    style: TextStyle(
+                                                        color: Colors.purple,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['pH'].toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'Cond.',
+                                                    style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['Conductivity']
+                                                      .toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Text(
+                                                    'Temp.',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['Temperature']
+                                                      .toString()),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Moist.',
+                                                    style: TextStyle(
+                                                        color: Colors
+                                                            .pink.shade700,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(doc['Moisture']
+                                                      .toString()),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Divider(
+                                          height: 5.0,
+                                        ),
+                                      ],
+                                    ))
+                                .toList(),
+                          )
                   ],
                 ),
               ),
@@ -392,13 +399,14 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
     });
     openBottomSheet();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Row(
-         mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               'analyzer_heading'.tr,
@@ -413,22 +421,25 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
         elevation: 0.0,
         actions: [
           _loading
-              ? Loading(size:40,color:Colors.black,)
+              ? Loading(
+                  size: 40,
+                  color: Colors.black,
+                )
               : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                padding: const EdgeInsets.all(0),
-                icon: const Icon(Icons.history),
-                onPressed: showHistory,
-                iconSize: 23,
-              ),
-              Text(
-                'history'.tr,
-                style: const TextStyle(fontSize: 10.7, height: 0.2),
-              ),
-            ],
-          ),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(Icons.history),
+                      onPressed: showHistory,
+                      iconSize: 23,
+                    ),
+                    Text(
+                      'history'.tr,
+                      style: const TextStyle(fontSize: 10.7, height: 0.2),
+                    ),
+                  ],
+                ),
           const SizedBox(
             width: 15,
           ),
@@ -496,219 +507,203 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                 const SizedBox(
                   height: 20,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <NPKData>[
                     NPKData('Temperature', 'Temperature', _temperature, Colors.black,
                         _idealRange['Temperature']!.getStatus(_temperature)),
                     NPKData('Moisture', 'Moisture', _moisture, Colors.pink.shade700,
                         _idealRange['Moisture']!.getStatus(_moisture)),
-                    NPKData('Nitrogen'.tr, 'N', _nitrogen, Colors.blue,
-                        _idealRange['N']!.getStatus(_nitrogen)),
-                    NPKData('Phosphorus', 'P', _phosphorus, Colors.orange,
-                        _idealRange['P']!.getStatus(_phosphorus)),
-                    NPKData('Potassium', 'K', _potassium, Colors.purple,
-                        _idealRange['K']!.getStatus(_potassium)),
-                    NPKData('PH', 'pH', _ph, Colors.green,
-                        _idealRange['pH']!.getStatus(_ph)),
-                    NPKData('Conductivity', 'Conductivity', _conductivity, Colors.red,
-                        _idealRange['Conductivity']!.getStatus(_conductivity)),
-
                   ]
                       .map((e) => Column(
                             children: [
                               const SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 150,
-                                    height: 150,
-                                    child: SfRadialGauge(
-                                      enableLoadingAnimation: true,
-                                      animationDuration: 1000,
-                                      axes: <RadialAxis>[
-                                        RadialAxis(
-                                          canScaleToFit: true,
-                                          minorTicksPerInterval: 10,
-                                          majorTickStyle: const MajorTickStyle(
-                                              thickness: 1,
-                                              length: 10,
-                                              color: Color.fromARGB(
-                                                  255, 116, 116, 116)),
-                                          minorTickStyle: const MinorTickStyle(
-                                              thickness: 0.5,
-                                              length: 7,
-                                              color: Color.fromARGB(
-                                                  255, 116, 116, 116)),
-                                          minimum: 0.0,
-                                          maximum: _idealRange[e.symbol]!
-                                                  .start
-                                                  .toDouble() +
-                                              _idealRange[e.symbol]!
-                                                  .end
-                                                  .toDouble(),
-                                          interval: ((_idealRange[e.symbol]!
-                                                          .start
-                                                          .toDouble() +
-                                                      _idealRange[e.symbol]!
-                                                          .end
-                                                          .toDouble()) /
-                                                  10)
-                                              .floorToDouble(),
-                                          axisLabelStyle:
-                                              const GaugeTextStyle(fontSize: 8),
-                                          axisLineStyle: const AxisLineStyle(
-                                              thickness: 5, color: Colors.black),
-                                          ranges: <NPKRange>[
-                                            NPKRange(
-                                                'Low'.tr,
-                                                0,
-                                                _idealRange[e.symbol]!.start,
-                                                Colors.red),
-                                            NPKRange(
-                                                'Ideal'.tr,
-                                                _idealRange[e.symbol]!.start,
-                                                _idealRange[e.symbol]!.end,
-                                                Colors.green),
-                                            NPKRange(
-                                                'High'.tr,
-                                                _idealRange[e.symbol]!.end,
-                                                _idealRange[e.symbol]!.start +
-                                                    _idealRange[e.symbol]!.end,
-                                                Colors.red),
-                                          ]
-                                              .map((r) => GaugeRange(
-                                                    startValue:
-                                                        r.start.toDouble(),
-                                                    endValue: r.end.toDouble(),
-                                                    startWidth: 15,
-                                                    endWidth: 15,
-                                                    rangeOffset: -5.0,
-                                                    label: r.label,
-                                                    labelStyle:
-                                                        const GaugeTextStyle(
-                                                            fontSize: 10,
-                                                            color: Colors.white),
-                                                    // gradient: SweepGradient(
-                                                    //     colors: <Color>[e.color.withOpacity(.6), e.color],
-                                                    //     stops: const <double>[0.25, 0.75]),
-                                                    color: r.color,
-                                                  ))
-                                              .toList(),
-                                          pointers: <GaugePointer>[
-                                            NeedlePointer(
-                                              value: e.value * 1.00,
-                                              enableAnimation: true,
-                                              needleLength: 0.5,
-                                              needleStartWidth: 1,
-                                              needleEndWidth: 4,
-                                            )
-                                          ],
-                                          annotations: <GaugeAnnotation>[
-                                            GaugeAnnotation(
-                                              widget: Text(
-                                                e.symbol,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16,
-                                                    color: e.color),
-                                              ),
-                                              positionFactor: 0.5,
-                                              angle: 90,
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        e.label,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: e.color,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'current_reading'.tr,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Text(
-                                            '${e.value}',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Ideal Reading: ',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Text(
-                                            _idealRange[e.symbol].toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Status: ',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Text(
-                                            e.status.label,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: e.status.color,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Text(
+                                  e.label=="Temperature"?"T - ${e.value.toString()} °C" :
+                                  "Moist. - ${e.value.toString()} %",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: e.color,
+                                  fontSize: 20,
+                                ),
                               ),
                             ],
                           ))
                       .toList(),
                 ),
+              const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: <NPKData>[
+                        NPKData('Nitrogen'.tr, 'N', _nitrogen, Colors.blue,
+                            _idealRange['N']!.getStatus(_nitrogen)),
+                        NPKData('Phosphorus', 'P', _phosphorus, Colors.orange,
+                            _idealRange['P']!.getStatus(_phosphorus)),
+                        NPKData('Potassium', 'K', _potassium, Colors.purple,
+                            _idealRange['K']!.getStatus(_potassium)),
+                      ]
+                          .map((e) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            e.label + " ("+ e.symbol+")",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: e.color,
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Ideal Reading: ',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                _idealRange[e.symbol].toString(),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Status: ',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                e.status.label,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: e.status.color,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                             const SizedBox(width: 20,),
+                              SizedBox(
+                                width: 130,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RichText(
+                                     text: TextSpan(
+                                         children: [
+                                           TextSpan(
+                                             text: '${e.value}',
+                                             style: TextStyle(
+                                               fontWeight: FontWeight.bold,
+                                               fontStyle: FontStyle.italic,
+                                               fontSize: 40,
+                                               color: e.color,
+                                             ),
+                                           ),
+                                           TextSpan(
+                                             text: 'mg/kg',
+                                             style: TextStyle(
+                                               fontWeight: FontWeight.bold,
+                                               fontStyle: FontStyle.italic,
+                                               fontSize: 14,
+                                               color: e.color,
+                                             ),
+                                           )
+                                       ]
+                                     ),
+                                    ),
+                                    // Text(
+                                    //   '${e.value}',
+                                    //   style: TextStyle(
+                                    //     fontWeight: FontWeight.bold,
+                                    //     fontStyle: FontStyle.italic,
+                                    //     fontSize: 40,
+                                    //     color: e.color,
+                                    //   ),
+                                    // ),
+                                    // Text('mg/kg',  style: TextStyle(
+                                    //   fontWeight: FontWeight.bold,
+                                    //   fontStyle: FontStyle.italic,
+                                    //   fontSize: 14,
+                                    //   color: e.color,
+                                    // ),),
+                                    Text(
+                                      'current_reading'.tr,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ))
+                          .toList(),
+                    ),
+                  ],
+                ),
+          const SizedBox(
+                  height: 30,
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <NPKData>[
+                  NPKData('PH', 'pH', _ph, Colors.green,
+                      _idealRange['pH']!.getStatus(_ph)),
+                  NPKData('Conductivity', 'Conductivity', _conductivity, Colors.red,
+                      _idealRange['Conductivity']!.getStatus(_conductivity)),
+                ]
+                    .map((e) => Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      e.label=="PH"?"pH - ${e.value.toString()}" :
+                      "Cond. - ${e.value.toString()} μS/cm",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: e.color,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ))
+                    .toList(),
+              ),
                 const SizedBox(
                   height: 20,
                 ),
