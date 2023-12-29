@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "528134898472",
+    "project_id": "esp32sensor-10e27",
+    "storage_bucket": "esp32sensor-10e27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528134898472:android:3631d1bbabb65027fbc61d",
+        "android_client_info": {
+          "package_name": "com.hnrg.sensorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJC9qGuPpi3ZoHy-bDn_EaqAXE7-cxkh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

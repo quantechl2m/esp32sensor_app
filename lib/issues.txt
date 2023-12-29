@@ -1,0 +1,16 @@
+
+I also had the same issue but after going through the following steps I got my point;
+
+Your package name "com.example.com"(in your case It could be different) should be same in 5 locations, like e.g.
+
+1.android/app/src/debug/AndroidManifest.xml
+
+2.android/app/src/main/AndroidManifest.xml
+
+3.android/app/src/profile/AdroidManifest.xml
+
+4.buildgradle file defaultConfig { applicationId ""}
+
+5.MainActivity.java on "package" OR MainActivity.kotlin
+
+In my case my package name was com.example.blog_daily. So I rewrite all the packages with the same name at all the points and solved my issue.
