@@ -312,7 +312,7 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   const Text(
-                                                    'Cond.',
+                                                    'EC',
                                                     style: TextStyle(
                                                         color: Colors.red,
                                                         fontWeight:
@@ -348,7 +348,7 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Moist.',
+                                                    'RH% : ',
                                                     style: TextStyle(
                                                         color: Colors
                                                             .pink.shade700,
@@ -520,13 +520,28 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                  e.label=="Temperature"?"T - ${e.value.toString()} °C" :
-                                  "Moist. - ${e.value.toString()} %",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: e.color,
-                                  fontSize: 20,
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(7,10,7,10),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0xff0068b5).withOpacity(0.7),
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                  borderRadius:
+                                  BorderRadius.circular(10),
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: Text(
+                                    e.label=="Temperature"?"T : ${e.value.toString()} °C" :
+                                    "RH% : ${e.value.toString()} %",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:Colors.black,
+                                    fontSize: 24,
+                                  ),
                                 ),
                               ),
                             ],
@@ -534,8 +549,8 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                       .toList(),
                 ),
               const SizedBox(
-                  height: 20,
-                ),
+                  height: 40,
+              ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -548,135 +563,183 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                         NPKData('Potassium', 'K', _potassium, Colors.purple,
                             _idealRange['K']!.getStatus(_potassium)),
                       ]
-                          .map((e) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            e.label + " ("+ e.symbol+")",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: e.color,
-                                              fontSize: 24,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Ideal Reading: ',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              Text(
-                                                _idealRange[e.symbol].toString(),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Status: ',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              Text(
-                                                e.status.label,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: e.status.color,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                          .map((e) => Container(
+                        margin: const EdgeInsets.only(bottom:30),
+                        width: MediaQuery.of(context).size.width*0.9,
+                        padding: const EdgeInsets.fromLTRB(5,12,5,12),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xff0068b5).withOpacity(0.7),
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          borderRadius:
+                          BorderRadius.circular(10),
+                          color: Colors.grey.shade200,
+                        ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  e.label + " ("+ e.symbol+")",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 24,
                                   ),
-                             const SizedBox(width: 20,),
-                              SizedBox(
-                                width: 130,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    RichText(
-                                     text: TextSpan(
-                                         children: [
-                                           TextSpan(
-                                             text: '${e.value}',
-                                             style: TextStyle(
-                                               fontWeight: FontWeight.bold,
-                                               fontStyle: FontStyle.italic,
-                                               fontSize: 40,
-                                               color: e.color,
-                                             ),
-                                           ),
-                                           TextSpan(
-                                             text: 'mg/kg',
-                                             style: TextStyle(
-                                               fontWeight: FontWeight.bold,
-                                               fontStyle: FontStyle.italic,
-                                               fontSize: 14,
-                                               color: e.color,
-                                             ),
-                                           )
-                                       ]
-                                     ),
-                                    ),
-                                    // Text(
-                                    //   '${e.value}',
-                                    //   style: TextStyle(
-                                    //     fontWeight: FontWeight.bold,
-                                    //     fontStyle: FontStyle.italic,
-                                    //     fontSize: 40,
-                                    //     color: e.color,
-                                    //   ),
-                                    // ),
-                                    // Text('mg/kg',  style: TextStyle(
-                                    //   fontWeight: FontWeight.bold,
-                                    //   fontStyle: FontStyle.italic,
-                                    //   fontSize: 14,
-                                    //   color: e.color,
-                                    // ),),
-                                    Text(
-                                      'current_reading'.tr,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                            ],
+                                // Column(
+                                //       children: [
+                                //         const SizedBox(
+                                //           height: 20,
+                                //         ),
+                                //         Column(
+                                //           crossAxisAlignment:
+                                //               CrossAxisAlignment.center,
+                                //           mainAxisAlignment: MainAxisAlignment.center,
+                                //           children: [
+                                //             Text(
+                                //               e.label + " ("+ e.symbol+")",
+                                //               style: TextStyle(
+                                //                 fontWeight: FontWeight.bold,
+                                //                 color: Colors.black,
+                                //                 fontSize: 22,
+                                //               ),
+                                //             ),
+                                //             // const SizedBox(
+                                //             //   height: 5,
+                                //             // ),
+                                //             // Row(
+                                //             //   children: [
+                                //             //     const Text(
+                                //             //       'Ideal Reading: ',
+                                //             //       style: TextStyle(
+                                //             //         fontSize: 14,
+                                //             //       ),
+                                //             //     ),
+                                //             //     Text(
+                                //             //       _idealRange[e.symbol].toString(),
+                                //             //       style: const TextStyle(
+                                //             //         fontWeight: FontWeight.bold,
+                                //             //         fontSize: 14,
+                                //             //       ),
+                                //             //     ),
+                                //             //   ],
+                                //             // ),
+                                //             // const SizedBox(
+                                //             //   height: 5,
+                                //             // ),
+                                //             // Row(
+                                //             //   children: [
+                                //             //     const Text(
+                                //             //       'Status: ',
+                                //             //       style: TextStyle(
+                                //             //         fontSize: 14,
+                                //             //       ),
+                                //             //     ),
+                                //             //     Text(
+                                //             //       e.status.label,
+                                //             //       style: TextStyle(
+                                //             //         fontWeight: FontWeight.bold,
+                                //             //         color: e.status.color,
+                                //             //         fontSize: 14,
+                                //             //       ),
+                                //             //     ),
+                                //             //   ],
+                                //             // ),
+                                //           ],
+                                //         ),
+                                //       ],
+                                //     ),
+                               const SizedBox(width: 20,),
+                                RichText(
+                                  text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: '${e.value}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 40,
+                                            color: Color(0xff0068b5),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'mg/kg',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color:Color(0xff0068b5),
+                                          ),
+                                        )
+                                      ]
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   width: 130,
+                                //   child: Column(
+                                //     crossAxisAlignment: CrossAxisAlignment.center,
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: [
+                                //       RichText(
+                                //        text: TextSpan(
+                                //            children: [
+                                //              TextSpan(
+                                //                text: '${e.value}',
+                                //                style: TextStyle(
+                                //                  fontWeight: FontWeight.bold,
+                                //                  fontStyle: FontStyle.italic,
+                                //                  fontSize: 40,
+                                //                  color: Color(0xff0068b5),
+                                //                ),
+                                //              ),
+                                //              TextSpan(
+                                //                text: 'mg/kg',
+                                //                style: TextStyle(
+                                //                  fontWeight: FontWeight.bold,
+                                //                  fontStyle: FontStyle.italic,
+                                //                  fontSize: 14,
+                                //                  color:Color(0xff0068b5),
+                                //                ),
+                                //              )
+                                //          ]
+                                //        ),
+                                //       ),
+                                //       // Text(
+                                //       //   '${e.value}',
+                                //       //   style: TextStyle(
+                                //       //     fontWeight: FontWeight.bold,
+                                //       //     fontStyle: FontStyle.italic,
+                                //       //     fontSize: 40,
+                                //       //     color: e.color,
+                                //       //   ),
+                                //       // ),
+                                //       // Text('mg/kg',  style: TextStyle(
+                                //       //   fontWeight: FontWeight.bold,
+                                //       //   fontStyle: FontStyle.italic,
+                                //       //   fontSize: 14,
+                                //       //   color: e.color,
+                                //       // ),),
+                                //       // Text(
+                                //       //   'current_reading'.tr,
+                                //       //   style: const TextStyle(
+                                //       //     fontSize: 14,
+                                //       //   ),
+                                //       // ),
+                                //     ],
+                                //   ),
+                                // ),
+                              ],
+                            ),
                           ))
                           .toList(),
                     ),
                   ],
                 ),
           const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -688,16 +751,32 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                 ]
                     .map((e) => Column(
                   children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      e.label=="PH"?"pH - ${e.value.toString()}" :
-                      "Cond. - ${e.value.toString()} μS/cm",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: e.color,
-                        fontSize: 20,
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom:10),
+                      padding: const  EdgeInsets.fromLTRB(7,10,7,10),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff0068b5).withOpacity(0.7),
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                        borderRadius:
+                        BorderRadius.circular(10),
+                        color: Colors.grey.shade200,
+                      ),
+                      child: Text(
+                        e.label=="PH"?"pH : ${e.value.toString()}" :
+                        "EC : ${e.value.toString()} μS/cm",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 24,
+                        ),
                       ),
                     ),
                   ],
@@ -753,3 +832,5 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
     );
   }
 }
+
+//#0068b5
