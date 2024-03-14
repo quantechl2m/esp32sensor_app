@@ -44,7 +44,7 @@ class _DiseaseDetectorState extends State<DiseaseDetector> {
       <DropdownMenuEntry<String>>[
     DropdownMenuEntry(value: '', label: 'choose_rabi'.tr),
     DropdownMenuEntry(value: 'potato', label: 'potato'.tr),
-    DropdownMenuEntry(value: 'wheat', label: 'wheat'.tr, enabled: false),
+    DropdownMenuEntry(value: 'wheat', label: 'wheat'.tr),
     DropdownMenuEntry(value: 'gram', label: 'gram'.tr, enabled: false),
   ];
 
