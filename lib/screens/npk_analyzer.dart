@@ -34,58 +34,12 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
   String _lastUpdatedText = 'Fetching...';
   Map<String, Range> _idealRange = {};
   final List<Crop> _crops = [];
+  final List<String>cropNames=[];
 
   late StreamSubscription<QuerySnapshot> _eventsSubscription;
 
   final CollectionReference _currentNPKRef =
       FirebaseFirestore.instance.collection('npk_readings');
-
-  void getCrops() async {
-    List<Crop> crops = [];
-    setState(() {
-      _crops.clear();
-    });
-    await FirebaseFirestore.instance
-        .collection('npk_ideal_ranges')
-        .where('type', isEqualTo: 'crop')
-        .get()
-        .then((e) {
-      for (var element in e.docs) {
-        Map? data = element.data();
-        crops.add(Crop(
-          element.id,
-          data['image'] ?? 'assets/images/soil.png',
-          data['season'] ?? '',
-          NPKIdealRange(
-            data['N'] ?? '100-150',
-            data['P'] ?? '100-150',
-            data['K'] ?? '100-150',
-            data['pH'] ?? '100-150',
-            data['Conductivity'] ?? '100-150',
-            data['Temperature'] ?? '100-150',
-            data['Moisture'] ?? '100-150',
-          ),
-        ));
-      }
-
-      for (var crop in crops) {
-        if (crop.npkIdealRange.isInRange(_nitrogen, _phosphorus, _potassium,
-            _ph, _conductivity, _temperature, _moisture)) {
-          setState(() {
-            _crops.add(crop);
-          });
-        }
-      }
-      if (kDebugMode) {
-        print('SUITABLE CROPS:\n $_crops');
-      }
-    }).onError((error, stackTrace) {
-      Get.snackbar('Error', error.toString());
-      if (kDebugMode) {
-        print('error - getCrops: $error');
-      }
-    });
-  }
 
   void getIdealRange() {
     setState(() {
@@ -160,6 +114,100 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
               dateFormatter((data?['timestamp'] as Timestamp).toDate());
         });
         getCrops();
+      }
+    });
+  }
+
+  void getCrops() async {
+    List<Crop> crops = [];
+    setState(() {
+      _crops.clear();
+    });
+    await FirebaseFirestore.instance
+        .collection('npk_ideal_ranges')
+        .where('type', isEqualTo: 'crop')
+        .get()
+        .then((e) {
+      for (var element in e.docs) {
+        Map? data = element.data();
+        crops.add(Crop(
+          element.id,
+          data['image'] ?? 'assets/images/soil.png',
+          data['season'] ?? '',
+          NPKIdealRange(
+            data['N'] ?? '100-150',
+            data['P'] ?? '100-150',
+            data['K'] ?? '100-150',
+            data['pH'] ?? '100-150',
+            data['Conductivity'] ?? '100-150',
+            data['Temperature'] ?? '100-150',
+            data['Moisture'] ?? '100-150',
+          ),
+        ));
+      }
+// Add logic to check NPK values against your specific crop requirements
+      bool cropAdded = false;
+
+      // Maize conditions
+      if (_nitrogen >= 100 && _nitrogen <= 180 &&
+          _phosphorus >= 90 && _phosphorus <= 130 &&
+          _potassium >= 110 && _potassium <= 150) {
+        cropNames.add('Maize');
+        cropAdded = true;
+      }
+
+      // Wheat conditions
+      if (_nitrogen >= 125 && _nitrogen <= 150 &&
+          _phosphorus >= 25 && _phosphorus <= 40 &&
+          _potassium >= 50 && _potassium <= 75) {
+        cropNames.add('Wheat');
+        cropAdded = true;
+      }
+
+      // Rice conditions
+      if (_nitrogen >= 80 && _nitrogen <= 120 &&
+          _phosphorus >= 30 && _phosphorus <= 60 &&
+          _potassium >= 40 && _potassium <= 80) {
+        cropNames.add('Rice');
+        cropAdded = true;
+      }
+
+      // Potato conditions
+      if (_nitrogen >= 50 && _nitrogen <= 100 &&
+          _phosphorus >= 60 && _phosphorus <= 100 &&
+          _potassium >= 100 && _potassium <= 150) {
+        cropNames.add('Potato');
+        cropAdded = true;
+      }
+
+      // Soybean conditions
+      if (_nitrogen >= 20 && _nitrogen <=50 &&
+          _phosphorus >= 60 && _phosphorus <= 100 &&
+          _potassium >= 50 && _potassium <= 100) {
+        cropNames.add('Soybean');
+        cropAdded = true;
+      }
+
+      // If no crop is suitable, add "No Crop"
+      if (!cropAdded) {
+        cropNames.add('No Crop');
+      }
+
+      for (var crop in crops) {
+        if (crop.npkIdealRange.isInRange(_nitrogen, _phosphorus, _potassium,
+            _ph, _conductivity, _temperature, _moisture)) {
+          setState(() {
+            _crops.add(crop);
+          });
+        }
+      }
+      if (kDebugMode) {
+        print('SUITABLE CROPS:\n $_crops');
+      }
+    }).onError((error, stackTrace) {
+      Get.snackbar('Error', error.toString());
+      if (kDebugMode) {
+        print('error - getCrops: $error');
       }
     });
   }
@@ -803,28 +851,25 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: _crops
-                          .map((e) => SizedBox(
-                                width: 100,
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      e.image,
-                                      height: 80,
-                                      width: 80,
-                                    ),
-                                    Text(
-                                      e.name,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
-                              ))
+                      children: cropNames
+                          .map((e) => ListTile(
+                        leading:  CircleAvatar(
+                          radius: 35, // Size of the avatar
+                          backgroundImage: AssetImage('assets/images/soil.png'),
+                        ),
+                        title: Text(e,
+                          style: const TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                        subtitle: Text(
+                          'Suggested by checking NPK concentration !',
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize:12
+                          ),
+                        ),
+                      ))
                           .toList(),
                     ))
               ]),
@@ -834,3 +879,24 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
 }
 
 //#0068b5
+// SizedBox(
+// width: 100,
+// child: Column(
+// children: [
+// // Image.asset(
+// //   e.image,
+// //   height: 80,
+// //   width: 80,
+// // ),
+// Text(
+// e,
+// style: const TextStyle(
+// fontSize: 12,
+// ),
+// ),
+// const SizedBox(
+// height: 10,
+// ),
+// ],
+// ),
+// )
