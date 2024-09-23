@@ -862,8 +862,9 @@ class _NPKAnalyzerState extends State<NPKAnalyzer> {
                           fontSize: 19,
                           fontWeight: FontWeight.bold,
                         ),),
-                        subtitle: Text(
-                          'Suggested by checking NPK concentration !',
+                        subtitle:Text(e=='No Crop'?
+                        'Suggested by checking NPK concentration !':
+                          'No suitable crop found for the current NPK concentration among the available crops',
                           style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize:12

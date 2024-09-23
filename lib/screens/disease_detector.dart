@@ -225,6 +225,7 @@ class _DiseaseDetectorState extends State<DiseaseDetector> {
             style: const TextStyle(
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
           backgroundColor: Colors.black26,

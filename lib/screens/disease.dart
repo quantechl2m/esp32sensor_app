@@ -58,33 +58,36 @@ class _DiseasePageState extends State<DiseasePage>
             style: TextStyle(
                 fontSize:
                     widget.diseaseObject.diseaseName.length > 20 ? 20 : 25,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.bold,
+              color: Colors.white
+            )),
         centerTitle: true,
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(0.0),
             child: SizedBox(
                 height: 55,
-                width: MediaQuery.of(context).size.width - 20,
+                width: MediaQuery.of(context).size.width - 40,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: TabBar(
+                       indicatorPadding: const EdgeInsets.symmetric(horizontal: -7,vertical: 5),
                         controller: _tabController,
                         indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(20),
                             color: Colors.blue.shade400),
                         tabs: [
                           Tab(
                               height: 45,
-                              child: Text('prediction'.tr,
+                              child: Text('Prediction'.tr,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))),
                           Tab(
                               height: 45,
-                              child: Text('suggestions'.tr,
+                              child: Text('Suggestions'.tr,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))),

@@ -517,6 +517,7 @@ class _NPKSensorState extends State<NPKSensor> {
             style: const TextStyle(
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
           backgroundColor: Colors.black26,
